@@ -233,15 +233,25 @@ export default class Poker extends Sprite {
     );
 
     ctx.drawImage(
+      //   this.icon,
+      //   0,
+      //   0,
+      //   104,
+      //   104,
+      //   this.moveX / 2 + 3 * r,
+      //   this.moveY / 2 + 3 * r,
+      //   30 * r,
+      //   30 * r
+      // );
       this.icon,
       0,
       0,
-      104,
-      104,
+      128 * 2,
+      128 * 2,
       this.moveX / 2 + 3 * r,
-      this.moveY / 2 + 3 * r,
-      30 * r,
-      30 * r
+      this.moveY / 2 + 5 * r,
+      30 * r * 2,
+      30 * r * 2
     );
 
     if (this.isCover) {

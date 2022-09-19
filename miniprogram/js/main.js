@@ -30,6 +30,10 @@ console.log(screenWidth, screenHeight);
 const BLOCK_WIDTH = 37.5;
 const BLOCK_HEIGHT = (37.5 / 118) * 135;
 
+// const dpr = wx.getSystemInfoSync().pixelRatio;
+canvas.width = canvas.width * 2;
+canvas.height = canvas.height * 2;
+ctx.scale(2, 2);
 /**
  * 游戏主函数
  */

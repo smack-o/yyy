@@ -5,14 +5,15 @@ const screenWidth = window.innerWidth;
 const screenHeight = window.innerHeight;
 
 // const BG_IMG_SRC = "images/bg.jpg";
-const BG_IMG_SRC = "images/yang/bg.png";
-const BAR_IMG_SRC = "images/yang/bar.png";
+const BG_IMG_SRC = "images/yang/new/bg.png";
+// const BAR_IMG_SRC = "images/yang/bar.png";
+const BAR_IMG_SRC = "images/yang/new/bar.png";
 const BAR_LEFT_IMG_SRC = "images/yang/leftBar.png";
 const BAR_BOTTOM_IMG_SRC = "images/yang/bottomBar.png";
 const M1_SRC = "images/yang/m1.png";
 const M2_SRC = "images/yang/m2.png";
 const M3_SRC = "images/yang/m3.png";
-const M4_SRC = "images/yang/m4.png";
+const M4_SRC = "images/yang/new/m4.png";
 const BG_WIDTH = 512;
 const BG_HEIGHT = 512;
 const r = screenWidth / 375;
@@ -102,53 +103,73 @@ export default class BackGround extends Sprite {
    * 第一张漏出高度为top部分，其余的隐藏在屏幕上面
    * 第二张补全除了top高度之外的部分，其余的隐藏在屏幕下面
    */
+  // render(ctx) {
+  //   if (databus.frame % ttt[1] < ttt[0]) {
+  //     ctx.drawImage(
+  //       this.img,
+  //       20,
+  //       20,
+  //       480,
+  //       screenHeight,
+  //       0,
+  //       0,
+  //       screenWidth,
+  //       screenHeight
+  //     );
+  //     ctx.drawImage(
+  //       this.img,
+  //       20,
+  //       20,
+  //       480,
+  //       screenHeight,
+  //       0,
+  //       screenHeight - 300,
+  //       screenWidth,
+  //       screenHeight
+  //     );
+  //   } else {
+  //     ctx.drawImage(
+  //       this.img,
+  //       20,
+  //       20,
+  //       480,
+  //       screenHeight + 10,
+  //       0,
+  //       0,
+  //       screenWidth,
+  //       screenHeight
+  //     );
+  //     ctx.drawImage(
+  //       this.img,
+  //       20,
+  //       20,
+  //       480,
+  //       screenHeight + 10,
+  //       0,
+  //       screenHeight - 300,
+  //       screenWidth,
+  //       screenHeight
+  //     );
+  //   }
+
+  //   this.renderBar();
+  //   this.renderOptions();
+  // }
   render(ctx) {
+    const a = (1280 * screenWidth) / 900;
+
     if (databus.frame % ttt[1] < ttt[0]) {
-      ctx.drawImage(
-        this.img,
-        20,
-        20,
-        480,
-        screenHeight,
-        0,
-        0,
-        screenWidth,
-        screenHeight
-      );
-      ctx.drawImage(
-        this.img,
-        20,
-        20,
-        480,
-        screenHeight,
-        0,
-        screenHeight - 300,
-        screenWidth,
-        screenHeight
-      );
+      ctx.drawImage(this.img, 0, 0, 900, 1280, 0, 0, screenWidth, 800);
+
+      // if (a < screenHeight) {
+      ctx.drawImage(this.img, 0, 0, 900, 1280, 0, 800, screenWidth, 800);
+      // }
     } else {
-      ctx.drawImage(
-        this.img,
-        20,
-        20,
-        480,
-        screenHeight + 10,
-        0,
-        0,
-        screenWidth,
-        screenHeight
-      );
-      ctx.drawImage(
-        this.img,
-        20,
-        20,
-        480,
-        screenHeight + 10,
-        0,
-        screenHeight - 300,
-        screenWidth,
-        screenHeight
-      );
+      ctx.drawImage(this.img, 0, 0, 900, 1280 + 10, 0, 0, screenWidth, 800);
+
+      // if (a < screenHeight) {
+      ctx.drawImage(this.img, 0, 0, 900, 1280 + 10, 0, 790, screenWidth, 800);
+      // }
     }
 
     this.renderBar();
@@ -171,69 +192,94 @@ export default class BackGround extends Sprite {
     // );
 
     this.ctx.font = `${15 * r}px Georgia`;
-    this.ctx.fillStyle = "#999";
-    this.ctx.fillText(`简单版羊了个羊`, 130 * r, 120);
+    this.ctx.fillStyle = "#fff";
+    this.ctx.fillText(`简单版“羊了个羊“`, 130 * r, 120);
 
     this.ctx.font = `${25 * r}px Georgia`;
     this.ctx.fillStyle = "#000";
     this.ctx.fillText(`第 ${databus.level} 关 (共 50 关)`, 100 * r, 150);
 
-    const aH = 100 * (screenWidth / 375);
-    const bH = 30 * (screenWidth / 375);
+    // const aH = 100 * (screenWidth / 375);
+    // const bH = 30 * (screenWidth / 375);
 
+    const barWidth = 48 * r * 7;
     this.ctx.drawImage(
-      this.barLeftImg,
+      this.barImg,
       0,
       0,
-      21,
-      143,
-      15,
+      258,
+      49,
+      screenWidth / 2 - barWidth / 2,
       screenHeight - 200 * r,
-      (aH / 143) * 21,
-      aH
-      // 350,
-      // (350 / 110) * 52
+      barWidth,
+      (barWidth / 258) * 49
     );
-    this.ctx.drawImage(
-      this.barLeftImg,
-      0,
-      0,
-      21,
-      143,
-      (bH / 45) * 499 + 6,
-      screenHeight - 200 * r,
-      (aH / 143) * 21,
-      aH
-      // 350,
-      // (350 / 110) * 52
-    );
+    // this.ctx.drawImage(
+    //   this.barLeftImg,
+    //   0,
+    //   0,
+    //   21,
+    //   143,
+    //   15,
+    //   screenHeight - 200 * r,
+    //   (aH / 143) * 21,
+    //   aH
+    //   // 350,
+    //   // (350 / 110) * 52
+    // );
+    // this.ctx.drawImage(
+    //   this.barLeftImg,
+    //   0,
+    //   0,
+    //   21,
+    //   143,
+    //   (bH / 45) * 499 + 6,
+    //   screenHeight - 200 * r,
+    //   (aH / 143) * 21,
+    //   aH
+    //   // 350,
+    //   // (350 / 110) * 52
+    // );
 
-    this.ctx.drawImage(
-      this.barBottomImg,
-      0,
-      0,
-      499,
-      45,
-      18,
-      screenHeight - 130 * r,
-      (bH / 45) * 499,
-      bH
-      // 350,
-      // (350 / 110) * 52
-    );
+    // this.ctx.drawImage(
+    //   this.barBottomImg,
+    //   0,
+    //   0,
+    //   499,
+    //   45,
+    //   18,
+    //   screenHeight - 130 * r,
+    //   (bH / 45) * 499,
+    //   bH
+    //   // 350,
+    //   // (350 / 110) * 52
+    // );
 
-    this.ctx.fillStyle = "#8c5d2b";
-    this.ctx.fillRect(35 * r, screenHeight - 190 * r, 300 * r, 60 * r);
-    this.ctx.fillStyle = "none";
+    // this.ctx.fillStyle = "#8c5d2b";
+    // this.ctx.fillRect(35 * r, screenHeight - 190 * r, 300 * r, 60 * r);
+    // this.ctx.fillStyle = "none";
   }
 
   renderOptions() {
+    // this.ctx.drawImage(
+    //   this.m4,
+    //   0,
+    //   0,
+    //   103,
+    //   87,
+    //   30 * r,
+    //   screenHeight - 90 * r,
+    //   80 * r,
+    //   (80 / 103) * 87 * r
+    //   // 350,
+    //   // (350 / 110) * 52
+    // );
     this.ctx.drawImage(
       this.m4,
       0,
       0,
-      103,
-      87,
+      190,
+      84,
       30 * r,
       screenHeight - 90 * r,
       80 * r,
@@ -270,8 +316,8 @@ export default class BackGround extends Sprite {
       this.m4,
       0,
       0,
-      103,
-      87,
+      190,
+      84,
       (30 + 120) * r,
       screenHeight - 90 * r,
       80 * r,
@@ -308,8 +354,8 @@ export default class BackGround extends Sprite {
       this.m4,
       0,
       0,
-      103,
-      87,
+      190,
+      84,
       (30 + 120 * 2) * r,
       screenHeight - 90 * r,
       80 * r,

@@ -16,17 +16,30 @@ const getImage = (url) => {
   return img;
 };
 // const icons = [`🎨`, `🌈`, `⚙️`, `💻`, `📚`, `🐯`, `🐤`, `🐼`, `🐏`, `🍀`];
+// const icons = [
+//   getImage("images/yang/p1.png"),
+//   getImage("images/yang/p2.png"),
+//   getImage("images/yang/p3.png"),
+//   getImage("images/yang/p4.png"),
+//   getImage("images/yang/p5.png"),
+//   getImage("images/yang/p6.png"),
+//   getImage("images/yang/p7.png"),
+//   getImage("images/yang/p8.png"),
+//   getImage("images/yang/p9.png"),
+//   getImage("images/yang/p10.png"),
+// ];
+
 const icons = [
-  getImage("images/yang/p1.png"),
-  getImage("images/yang/p2.png"),
-  getImage("images/yang/p3.png"),
-  getImage("images/yang/p4.png"),
-  getImage("images/yang/p5.png"),
-  getImage("images/yang/p6.png"),
-  getImage("images/yang/p7.png"),
-  getImage("images/yang/p8.png"),
-  getImage("images/yang/p9.png"),
-  getImage("images/yang/p10.png"),
+  getImage("images/yang/new/1.png"),
+  getImage("images/yang/new/2.png"),
+  getImage("images/yang/new/3.png"),
+  getImage("images/yang/new/4.png"),
+  getImage("images/yang/new/5.png"),
+  getImage("images/yang/new/6.png"),
+  getImage("images/yang/new/7.png"),
+  getImage("images/yang/new/8.png"),
+  getImage("images/yang/new/9.png"),
+  getImage("images/yang/new/10.png"),
 ];
 
 const screenWidth = window.innerWidth;
@@ -182,7 +195,9 @@ export default class Pokers {
   makePokers(level) {
     const curLevel = Math.min(maxLevel, level);
     const iconPool = icons.slice(0, 2 * curLevel);
-    const offsetPool = [0, POKER_WIDTH, -POKER_WIDTH].slice(0, 1 + curLevel);
+    const offsetPoolX = [0, POKER_WIDTH, -POKER_WIDTH].slice(0, 1 + curLevel);
+    const offsetPoolY = [0, POKER_HEIGHT, -POKER_HEIGHT].slice(0, 1 + curLevel);
+
     // const offsetPool = [0];
 
     const pokers = [];
@@ -196,7 +211,10 @@ export default class Pokers {
     ][Math.min(4, curLevel - 1)];
 
     const randomSet = (icon) => {
-      const offset = offsetPool[Math.floor(offsetPool.length * Math.random())];
+      const offsetX =
+        offsetPoolX[Math.floor(offsetPoolX.length * Math.random())];
+      const offsetY =
+        offsetPoolY[Math.floor(offsetPoolY.length * Math.random())];
       const row = range[0] + Math.floor((range[1] - range[0]) * Math.random());
       const column =
         range[0] + Math.floor((range[1] - range[0]) * Math.random());
@@ -205,8 +223,8 @@ export default class Pokers {
         status: 0,
         icon,
         id: randomString(4),
-        x: column * POKER_WIDTH * 2 + offset + 70,
-        y: row * POKER_HEIGHT * 2 + offset + 400,
+        x: column * POKER_WIDTH * 2 + offsetX + 70,
+        y: row * POKER_HEIGHT * 2 + offsetY + 400,
       };
       const poker = new Poker(
         data.icon,
@@ -313,16 +331,16 @@ export default class Pokers {
     // 计算barPokers位置
     databus.barPokers.forEach((item, index) => {
       item.moveTo(
-        (37.5 * 2 * index + 78) * r,
-        (screenHeight - 190 * r + 5 * r) * 2
+        (POKER_WIDTH * 2 * index + 68) * r,
+        (screenHeight - 190 * r - 5 * r) * 2
       );
     });
 
-    console.log(
-      databus.barPokers.length,
-      databus.barPokers.length === 1,
-      "databus.barPokers"
-    );
+    // console.log(
+    //   databus.barPokers.length,
+    //   databus.barPokers.length === 1,
+    //   "databus.barPokers"
+    // );
 
     // 输了
     if (databus.barPokers.length === 7) {
@@ -338,9 +356,16 @@ export default class Pokers {
               title: "不要再折磨我了，快来玩玩简单版羊了个羊吧",
               imageUrl: "", // 图片 URL
             });
-            databus.pCount += 1;
-            databus.popCount += 1;
-            databus.recoverCount += 1;
+            if (
+              databus.pCount === 0 &&
+              databus.popCount === 0 &&
+              databus.recoverCount === 0
+            ) {
+              databus.pCount += 1;
+              databus.popCount += 1;
+              databus.recoverCount += 1;
+            }
+            this.handlePop();
           } else if (res.cancel) {
             this.reset();
           }
